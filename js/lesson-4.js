@@ -134,7 +134,24 @@ listItems.forEach((element) => {
 // Парні числа повинні мати зелений фон (додати клас even),
 // Непарні числа - жовтий фон (додати клас odd).
 
-// const randomNumber = () => Math.floor(Math.random() * 100) + 1;
+const randomNumber = () => Math.floor(Math.random() * 100) + 1;
+
+const numberContainer = document.querySelector(".number-container");
+
+for (let i = 0; i < 100; i++) {
+  const number = randomNumber();
+  const numberElement = document.createElement("div");
+  numberElement.classList.add("number");
+  numberElement.textContent = number;
+
+  if (number % 2 === 0) {
+    numberElement.classList.add("even");
+  } else {
+    numberElement.classList.add("odd");
+  }
+
+  numberContainer.appendChild(numberElement);
+}
 
 // --------------------------------------3-----------------------------------
 // Form Events, Input, Focus, Blur and Submit.
@@ -165,7 +182,81 @@ listItems.forEach((element) => {
 // При відправці форми, очисти інпут, верни чек бокс у положення
 // false, верни дефолтне значення "Anonymous" у span.
 
+const form = document.querySelector(".js-contact-form");
+const input = form.querySelector('input[type="text"]');
+const checkbox = form.querySelector('input[type="checkbox"]');
+const userNameSpan = document.querySelector(".js-username-output");
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+});
+
+input.addEventListener("input", () => {
+  if (input.value.length > 6) {
+    input.classList.add("success");
+    input.classList.remove("error");
+  } else {
+    input.classList.add("error");
+    input.classList.remove("success");
+  }
+});
+
+input.addEventListener("focus", () => {
+  if (input.value === "") {
+    input.style.outline = "3px solid red";
+  } else {
+    input.style.outline = "3px solid green";
+  }
+});
+
+input.addEventListener("blur", () => {
+  if (input.value === "") {
+    input.style.outline = "3px solid red";
+  } else {
+    input.style.outline = "3px solid lime";
+  }
+});
+
+input.addEventListener("input", () => {
+  if (input.value === "") {
+    userNameSpan.textContent = "Anonymous";
+  } else {
+    userNameSpan.textContent = input.value;
+  }
+});
+
+form.addEventListener("submit", () => {
+  if (input.value === "" || !checkbox.checked) {
+    alert("ERROR");
+  } else {
+    const userData = {
+      userName: input.value,
+    };
+    console.log(userData);
+    alert("Form submitted successfully!");
+    input.value = "";
+    checkbox.checked = false;
+    userNameSpan.textContent = "Anonymous";
+  }
+});
+
 // --------------------------------------4-----------------------------------
 // Використовуй шаблон розмітки з файлу html та напиши наступний функціонал:
 // При кліку на кнопку "Зменшити" квадрат стає меньшим на 20 пікселів,
 // При кліку на кнопку "Збільшити" - квадрат стає більшим на 20 пікселів.
+
+const decreaseBtn = document.querySelector(".js-decrease");
+const increaseBtn = document.querySelector(".js-increase");
+const box = document.querySelector(".js-box");
+let boxSize = box.offsetWidth || 100;
+
+decreaseBtn.addEventListener("click", () => {
+  boxSize -= 20;
+  box.style.width = `${boxSize}px`;
+  box.style.height = `${boxSize}px`;
+});
+
+increaseBtn.addEventListener("click", () => {
+  boxSize += 20;
+  box.style.width = `${boxSize}px`;
+  box.style.height = `${boxSize}px`;
+});
