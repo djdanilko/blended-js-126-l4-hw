@@ -246,17 +246,23 @@ form.addEventListener("submit", () => {
 
 const decreaseBtn = document.querySelector(".js-decrease");
 const increaseBtn = document.querySelector(".js-increase");
-const box = document.querySelector(".js-box");
+const box = document.querySelector(".box");
+
 let boxSize = box.offsetWidth || 100;
 
 decreaseBtn.addEventListener("click", () => {
-  boxSize -= 20;
-  box.style.width = `${boxSize}px`;
-  box.style.height = `${boxSize}px`;
+  if (boxSize > 20) {
+    boxSize -= 20;
+    updateBoxSize();
+  }
 });
 
 increaseBtn.addEventListener("click", () => {
   boxSize += 20;
+  updateBoxSize();
+});
+
+function updateBoxSize() {
   box.style.width = `${boxSize}px`;
   box.style.height = `${boxSize}px`;
-});
+}
